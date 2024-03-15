@@ -1,15 +1,18 @@
-const express = require("express");
+import express, { Router } from "express";
 const cors = require("cors");
+import serverless from "serverless-http";
 
-const app = express();
-const post = 3000;
+
+const api = express();
+const post = process.env.PORT || 3000;
 
 const cssFilePath = path.join(__dirname, "/static/styles.css");
 const jsFilePath = path.join(__dirname, "/static/event.js");
 
-app.use(cors());
+const router = Router();
+api.use(cors());
 
-app.get("/statics/style.css", async (req, res) => {
+router.get("/statics/style.css", async (req, res) => {
   try {
     // Đọc nội dung của tệp tin CSS
     const cssContent = await fs.readFile(cssFilePath, "utf-8");
@@ -23,7 +26,7 @@ app.get("/statics/style.css", async (req, res) => {
   }
 });
 
-app.get("/statics/javascript.js", async (req, res) => {
+router.get("/statics/javascript.js", async (req, res) => {
   try {
     // Đọc nội dung của tệp tin CSS
     const jsContent = await fs.readFile(jsFilePath, "utf-8");
@@ -37,10 +40,9 @@ app.get("/statics/javascript.js", async (req, res) => {
   }
 });
 
-app.get('', (req, res) => {
+router.get('', (req, res) => {
   res.send("OK")
 })
 
-app.listen(post, (req, res) => {
-  console.log(`Server listening on ${post}`);
-});
+api.use("/api/", router);
+export const handler = serverless(api);

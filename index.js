@@ -9,7 +9,7 @@ const jsFilePath = path.join(__dirname, "/static/event.js");
 
 app.use(cors());
 
-app.get("/static/style.css", async (req, res) => {
+app.get("/statics/style.css", async (req, res) => {
   try {
     // Đọc nội dung của tệp tin CSS
     const cssContent = await fs.readFile(cssFilePath, "utf-8");
@@ -23,7 +23,7 @@ app.get("/static/style.css", async (req, res) => {
   }
 });
 
-app.get("/static/javascript.js", async (req, res) => {
+app.get("/statics/javascript.js", async (req, res) => {
   try {
     // Đọc nội dung của tệp tin CSS
     const jsContent = await fs.readFile(jsFilePath, "utf-8");
@@ -37,7 +37,7 @@ app.get("/static/javascript.js", async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
+app.get('', (req, res) => {
   res.send("OK")
 })
 

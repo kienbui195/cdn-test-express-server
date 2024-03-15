@@ -1,10 +1,9 @@
 import express, { Router } from "express";
 const cors = require("cors");
-import serverless from "serverless-http";
 
 
 const api = express();
-const post = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const cssFilePath = path.join(__dirname, "/static/styles.css");
 const jsFilePath = path.join(__dirname, "/static/event.js");
@@ -45,4 +44,7 @@ router.get('', (req, res) => {
 })
 
 api.use("/api/", router);
-export const handler = serverless(api);
+
+api.listen(port, (req, res) => {
+  console.log(`Server listening on ${port}`);
+})
